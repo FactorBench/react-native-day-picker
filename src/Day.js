@@ -2,6 +2,7 @@
 
 import React    from 'react';
 import {
+	Platform,
 	StyleSheet,
 	TouchableOpacity,
 	Text
@@ -48,7 +49,9 @@ export default class Day extends React.Component {
 				activeOpacity={disabled ? 1 : 0.5}
 				style={[styles.common, {backgroundColor: backColor, width: width / 7, height: width / 7}]}
 				onPress={onPress}>
-				<Text style={{color: textColor}}>{date.getDate()}</Text>
+				<Text style={{color: textColor, margin: Platform.select({	web: 'auto' })}}>
+					{date.getDate()}
+				</Text>
 			</TouchableOpacity>
 		);
 	}
