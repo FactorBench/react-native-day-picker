@@ -98,6 +98,19 @@ export default class Calendar extends React.Component {
 		this.state = {
 			dataSource: dataSource.cloneWithRows(this.months)
 		}
+
+		this.offset = { x: 0, y: 0 };
+	}
+
+	onScroll(e) {
+	  	this.offset = e.nativeEvent.contentOffset;
+	}
+
+	onWheel(e) { // invert scroller
+	  	if (!this.props.isFutureDate && this.listView) {
+	  		e.preventDefault();
+	  		this.listView.getScrollResponder().scrollTo({ x: 0, y: this.offset.y - e.deltaY });
+  	  	}
 	}
 
 	rowHasChanged(r1, r2) {
@@ -262,6 +275,9 @@ export default class Calendar extends React.Component {
 						/>
 					);
 				}}
+				ref={(component) => this.listView = component}
+	            onScroll={(e) => this.onScroll(e)}
+	            onWheel={(e) => this.onWheel(e)}
 			/>
 		);
 	}
